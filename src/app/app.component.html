@@ -1,0 +1,396 @@
+
+<header class="navbar">
+  <a class="logo" href="#inicio" (click)="irA('inicio')">
+    <span class="logo-icon">T</span>
+    Taller<span class="logo-light">Up.</span>
+  </a>
+
+  <nav>
+    <a href="#inicio" (click)="irA('inicio')">Inicio</a>
+    <a href="#talleres" (click)="irA('talleres')">Talleres</a>
+    <a href="#inscripcion" (click)="irA('inscripcion')">Inscripción</a>
+    <a href="#participantes" (click)="irA('participantes')">Participantes</a>
+  </nav>
+
+  <button class="nav-button" type="button" (click)="irA('inscripcion')">
+    Inscribirme <span>↗</span>
+  </button>
+</header>
+
+<main>
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <div class="eyebrow">
+        <span class="live-dot"></span>
+        APRENDE ALGO NUEVO HOY
+      </div>
+
+      <h1>Tu próximo nivel<br>empieza <span>aquí.</span></h1>
+
+      <p class="hero-description">
+        Explora nuevas habilidades, desarrolla tu talento y transforma
+        tus ideas en proyectos reales con nuestros talleres tecnológicos.
+      </p>
+
+      <div class="hero-actions">
+        <button class="primary-button" type="button" (click)="irA('talleres')">
+          Explorar talleres <span>↗</span>
+        </button>
+        <button class="text-button" type="button" (click)="irA('inscripcion')">
+          Quiero inscribirme →
+        </button>
+      </div>
+
+      <div class="hero-social">
+        <div class="avatar-stack">
+          <span>👩🏻</span><span>👨🏽</span><span>👩🏽</span><span>👨🏻</span>
+        </div>
+        <div>
+          <strong>Aprende haciendo</strong>
+          <small>Conocimiento que se convierte en experiencia.</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="visual-orbit orbit-one"></div>
+      <div class="visual-orbit orbit-two"></div>
+
+      <div class="visual-card main-visual-card">
+        <div class="visual-top">
+          <span class="mini-label">TU ESPACIO CREATIVO</span>
+          <span class="visual-status">● EN VIVO</span>
+        </div>
+        <div class="visual-emoji">🚀</div>
+        <h3>Ideas que se<br>convierten en realidad.</h3>
+        <p>Aprende. Practica. Crea.</p>
+        <div class="visual-progress">
+          <span></span>
+        </div>
+        <small>Tu aprendizaje comienza con un paso.</small>
+      </div>
+
+      <div class="floating-card float-code">
+        <span>✦</span>
+        <div><strong>Aprende</strong><small>Algo diferente</small></div>
+      </div>
+
+      <div class="floating-card float-star">
+        <span>✧</span>
+        <div><strong>¡Tú puedes!</strong><small>Construye tu futuro</small></div>
+      </div>
+    </div>
+
+    <div class="hero-bottom">
+      <span>01 / APRENDE</span>
+      <div></div>
+      <span>DESCUBRE · PRACTICA · CRECE</span>
+    </div>
+  </section>
+
+  <section class="stats-section">
+    <div class="stat">
+      <strong>{{ talleres.length | number:'2.0' }}</strong>
+      <span>Talleres disponibles</span>
+    </div>
+    <div class="stat">
+      <strong>{{ totalCupos }}</strong>
+      <span>Cupos disponibles</span>
+    </div>
+    <div class="stat">
+      <strong>{{ inscripciones.length | number:'2.0' }}</strong>
+      <span>Inscripciones registradas</span>
+    </div>
+    <div class="stat stat-note">
+      <span class="stat-sparkle">✳</span>
+      <span>El futuro se construye<br>con lo que aprendes hoy.</span>
+    </div>
+  </section>
+
+  <section class="section workshops-section" id="talleres">
+    <div class="section-heading">
+      <div>
+        <span class="section-kicker">01 — DESCUBRE</span>
+        <h2>Encuentra tu próximo<br><span>gran aprendizaje.</span></h2>
+      </div>
+      <p>
+        Talleres prácticos para explorar tus intereses,
+        fortalecer tus habilidades y abrir nuevas oportunidades.
+      </p>
+    </div>
+
+    <div class="workshop-grid">
+      <article
+        class="workshop-card"
+        *ngFor="let taller of talleres; let i = index"
+        [class]=" 'workshop-card ' + taller.color "
+        [style.animation-delay]="i * 100 + 'ms'">
+
+        <div class="workshop-card-top">
+          <span class="category">{{ taller.categoria }}</span>
+          <span class="workshop-icon">{{ taller.icono }}</span>
+        </div>
+
+        <h3>{{ taller.nombre }}</h3>
+        <p class="workshop-description">{{ taller.descripcion }}</p>
+
+        <div class="workshop-details">
+          <span>◷ {{ taller.horario }}</span>
+          <span>♧ {{ taller.cupos }} cupos disponibles</span>
+        </div>
+
+        <div class="workshop-footer">
+          <div class="price">
+            <small>Inversión</small>
+            <strong>S/ {{ taller.precio }}<small>.00</small></strong>
+          </div>
+
+          <button
+            type="button"
+            class="choose-button"
+            [disabled]="taller.cupos === 0"
+            (click)="seleccionarTaller(taller)">
+            {{ taller.cupos > 0 ? 'Elegir taller ↗' : 'Sin cupos' }}
+          </button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="registration-section" id="inscripcion">
+    <div class="registration-intro">
+      <span class="section-kicker">02 — DA EL PRIMER PASO</span>
+      <h2>Todo gran proyecto<br>comienza con una <span>decisión.</span></h2>
+      <p>
+        Completa tus datos y reserva tu lugar. ¡Nos alegra
+        acompañarte en tu próximo aprendizaje!
+      </p>
+
+      <div class="check-item"><span>✓</span> Registro sencillo y rápido</div>
+      <div class="check-item"><span>✓</span> Elige el taller que más te interese</div>
+      <div class="check-item"><span>✓</span> Consulta tu inscripción al instante</div>
+
+      <div class="registration-decoration">✳</div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-heading">
+        <div>
+          <span class="section-kicker">FORMULARIO</span>
+          <h3>Inscríbete ahora</h3>
+        </div>
+        <span class="form-step">01 / 01</span>
+      </div>
+
+      <div
+        *ngIf="mensaje"
+        class="alert"
+        [class.alert-success]="tipoMensaje === 'exito'"
+        [class.alert-error]="tipoMensaje === 'error'">
+        <span>{{ tipoMensaje === 'exito' ? '✓' : '!' }}</span>
+        {{ mensaje }}
+        <button type="button" class="alert-close" (click)="mensaje = ''">×</button>
+      </div>
+
+      <form #inscripcionForm="ngForm" (ngSubmit)="registrar(inscripcionForm)">
+        <div class="field-row">
+          <div class="field">
+            <label for="nombre">Nombre *</label>
+            <input
+              id="nombre"
+              name="nombre"
+              type="text"
+              placeholder="Tu nombre"
+              [(ngModel)]="formulario.nombre"
+              required
+              minlength="2"
+              maxlength="60"
+              #nombre="ngModel">
+            <small class="field-error" *ngIf="nombre.invalid && nombre.touched">
+              Escribe tu nombre (mínimo 2 caracteres).
+            </small>
+          </div>
+
+          <div class="field">
+            <label for="apellido">Apellido *</label>
+            <input
+              id="apellido"
+              name="apellido"
+              type="text"
+              placeholder="Tu apellido"
+              [(ngModel)]="formulario.apellido"
+              required
+              minlength="2"
+              maxlength="60"
+              #apellido="ngModel">
+            <small class="field-error" *ngIf="apellido.invalid && apellido.touched">
+              Escribe tu apellido.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="correo">Correo electrónico *</label>
+          <input
+            id="correo"
+            name="correo"
+            type="email"
+            placeholder="nombre@correo.com"
+            [(ngModel)]="formulario.correo"
+            required
+            email
+            maxlength="100"
+            #correo="ngModel">
+          <small class="field-error" *ngIf="correo.invalid && correo.touched">
+            Ingresa un correo electrónico válido.
+          </small>
+        </div>
+
+        <div class="field">
+          <label for="telefono">Teléfono *</label>
+          <input
+            id="telefono"
+            name="telefono"
+            type="tel"
+            placeholder="Ej. 987654321"
+            [(ngModel)]="formulario.telefono"
+            required
+            pattern="[0-9 +()-]{7,20}"
+            #telefono="ngModel">
+          <small class="field-error" *ngIf="telefono.invalid && telefono.touched">
+            Ingresa un teléfono válido.
+          </small>
+        </div>
+
+        <div class="field">
+          <label for="taller">Taller elegido *</label>
+          <select
+            id="taller"
+            name="taller"
+            [(ngModel)]="formulario.taller"
+            required
+            #tallerSelect="ngModel">
+            <option value="" disabled>Selecciona un taller</option>
+            <option *ngFor="let taller of talleres" [value]="taller.nombre" [disabled]="taller.cupos === 0">
+              {{ taller.icono }} {{ taller.nombre }} — S/ {{ taller.precio }}
+              {{ taller.cupos === 0 ? '(Sin cupos)' : '' }}
+            </option>
+          </select>
+          <small class="field-error" *ngIf="tallerSelect.invalid && tallerSelect.touched">
+            Debes elegir un taller.
+          </small>
+        </div>
+
+        <div class="field">
+          <label>Modalidad de participación *</label>
+          <div class="radio-options">
+            <label class="radio-option">
+              <input
+                type="radio"
+                name="modalidad"
+                value="Presencial"
+                [(ngModel)]="formulario.modalidad"
+                required>
+              <span>🏫 Presencial</span>
+            </label>
+            <label class="radio-option">
+              <input
+                type="radio"
+                name="modalidad"
+                value="Virtual"
+                [(ngModel)]="formulario.modalidad"
+                required>
+              <span>💻 Virtual</span>
+            </label>
+          </div>
+        </div>
+
+        <label class="terms">
+          <input type="checkbox" name="acepta" ngModel required #acepta="ngModel">
+          <span>Confirmo que mis datos son correctos y deseo registrar mi inscripción.</span>
+        </label>
+        <small class="field-error" *ngIf="acepta.invalid && acepta.touched">
+          Debes confirmar tus datos para continuar.
+        </small>
+
+        <button class="submit-button" type="submit">
+          Confirmar inscripción <span>↗</span>
+        </button>
+
+        <p class="form-footnote">* Campos obligatorios. Tus datos se muestran en esta sesión.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="participants-section" id="participantes">
+    <div class="section-heading participants-heading">
+      <div>
+        <span class="section-kicker">03 — ADMINISTRACIÓN</span>
+        <h2>Lista de <span>participantes.</span></h2>
+      </div>
+      <span class="count-badge">{{ inscripciones.length }} registrados</span>
+    </div>
+
+    <div class="empty-state" *ngIf="inscripciones.length === 0">
+      <span class="empty-icon">✎</span>
+      <h3>Aún no hay participantes</h3>
+      <p>Cuando alguien complete el formulario, aparecerá aquí su inscripción.</p>
+      <button type="button" class="primary-button" (click)="irA('inscripcion')">
+        Registrar participante ↗
+      </button>
+    </div>
+
+    <div class="table-wrapper" *ngIf="inscripciones.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>PARTICIPANTE</th>
+            <th>CONTACTO</th>
+            <th>TALLER</th>
+            <th>MODALIDAD</th>
+            <th>FECHA</th>
+            <th>ACCIÓN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let persona of inscripciones">
+            <td>
+              <div class="person-cell">
+                <span class="person-avatar">{{ persona.nombre.charAt(0).toUpperCase() }}</span>
+                <div>
+                  <strong>{{ persona.nombre }} {{ persona.apellido }}</strong>
+                  <small>ID-{{ persona.id.toString().slice(-6) }}</small>
+                </div>
+              </div>
+            </td>
+            <td>
+              <strong>{{ persona.correo }}</strong>
+              <small class="contact-phone">{{ persona.telefono }}</small>
+            </td>
+            <td>{{ persona.taller }}</td>
+            <td><span class="mode-badge">{{ persona.modalidad }}</span></td>
+            <td>{{ persona.fecha }}</td>
+            <td>
+              <button
+                type="button"
+                class="delete-button"
+                title="Eliminar inscripción"
+                (click)="eliminarInscripcion(persona)">
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <a class="logo footer-logo" href="#inicio" (click)="irA('inicio')">
+    <span class="logo-icon">T</span>
+    Taller<span class="logo-light">Up.</span>
+  </a>
+  <p>Aprende hoy. Crea lo que sigue.</p>
+  <span>© 2026 TallerUp · Proyecto académico S09</span>
+</footer>
